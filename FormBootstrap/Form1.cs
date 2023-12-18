@@ -49,14 +49,18 @@ namespace FormBootstrap
                 }
                 return;
             }
-            if (File.Exists(path+"Launcher.jar") && Directory.Exists(path+"JDK"))
+            void all()
             {
-                VersionManager();
+                if (File.Exists(path+"Launcher.jar") && Directory.Exists(path+"JDK"))
+                {
+                    VersionManager();
+                }
             }
             Launcher();
             await CustomWaitAsync(1000);
             JDK();
             await CustomWaitAsync(1000);
+            all();
             return;
         }
         void Launcherupdate()
@@ -79,7 +83,7 @@ namespace FormBootstrap
             }
             if ((diskJDKVersion == OnlineJDKVersion) && (diskLauncherVersion == OnlineLauncherVersion))
             {
-                Console.WriteLine("All Good !");
+                label1.Text = ("All Good !");
                 start();
             }
         }
@@ -115,9 +119,8 @@ namespace FormBootstrap
                 File.Delete(path+"launcher.jar");
             }
 
-            label1.Text = "Downloading Launcher ..."; await CustomWaitAsync(1000); web.DownloadFile("http://129.151.254.89/update/Launcher-JDK/javafx-launcher-1.0.0-all.jar", path+"launcher.jar");   updateDisplay("Launcher Successfully downloaded");
-            File.Delete(path+"launcher-version.txt");   GetLauncherVersion(); label1.Text = "Launcher is now install"; 
-            await CustomWaitAsync(1000); Launcherupdate();
+            label1.Text = "Downloading Launcher ..."; await CustomWaitAsync(1000); web.DownloadFile("http://129.151.254.89/update/Launcher-JDK/javafx-launcher-1.0.0-all.jar", path+"launcher.jar");   label1.Text = ("Launcher Successfully downloaded"); await CustomWaitAsync(1000);
+            File.Delete(path+"launcher-version.txt");   GetLauncherVersion(); Launcherupdate();
         }
         async void DownloadJDK()
         {
@@ -126,9 +129,8 @@ namespace FormBootstrap
                 Directory.Delete(path+"JDK", true);
             }
 
-            label1.Text = "Downloading JDK ..."; await CustomWaitAsync(1000); web.DownloadFile("https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.zip", path+"jdk.zip"); ZipFile.ExtractToDirectory(path+"jdk.zip", path+"JDK"); File.Delete(path+"jdk.zip"); updateDisplay("JDK Successfully downloaded");
-            File.Delete(path+"jdk-version.txt"); label1.Text = "Java is now install";
-            await CustomWaitAsync(1000); GetJDKVersion(); VersionManager();
+            label1.Text = "Downloading JDK, Can be long ..."; await CustomWaitAsync(1000); web.DownloadFile("https://download.oracle.com/java/17/latest/jdk-17_windows-x64_bin.zip", path+"jdk.zip"); ZipFile.ExtractToDirectory(path+"jdk.zip", path+"JDK"); File.Delete(path+"jdk.zip"); label1.Text = ("JDK Successfully downloaded"); await CustomWaitAsync(1000);
+            File.Delete(path+"jdk-version.txt"); GetJDKVersion(); VersionManager();
         }
         async void start()
         {
